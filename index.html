@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>500원 모아 건물주</title>
+  <title>500원 모아 건물주 프로젝트</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -50,16 +50,17 @@
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col items-center justify-start p-4 sm:p-6 select-none">
 
-  <header class="w-full max-w-sm flex items-center justify-between my-5 sm:my-7 px-1 relative">
-    <!-- Title -->
-    <div class="flex items-center gap-2 mx-auto">
-      <h1 class="text-2xl font-black text-[#255183] tracking-tight">
-        500원 모아 건물주
+  <header class="w-full max-w-sm flex items-center justify-between my-5 sm:my-7 px-1">
+    <!-- Title with vertical pill bar -->
+    <div class="flex items-center gap-2.5">
+      <span class="w-2.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+      <h1 class="text-xl sm:text-2xl font-black text-[#1A3A5C] tracking-tight">
+        500원 모아 건물주 프로젝트
       </h1>
     </div>
 
     <!-- Top Right QR Button -->
-    <button onclick="openQrModal()" class="absolute right-0 top-0.5 w-10 h-10 bg-white/90 backdrop-blur rounded-2xl shadow-sm border border-blue-100 flex items-center justify-center text-[#255183] hover:bg-blue-50 active:scale-95 transition-all" title="QR 코드">
+    <button onclick="openQrModal()" class="w-10 h-10 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-700 hover:bg-slate-50 active:scale-95 transition-all" title="QR 코드">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
       </svg>
@@ -67,10 +68,10 @@
   </header>
 
   <nav class="w-full max-w-sm mb-6 flex gap-2 p-2 bg-white/80 backdrop-blur rounded-2xl border border-blue-100 shadow-sm">
-    <button onclick="switchTab('rice')" id="tab-rice" class="tab-btn flex-1 py-3 rounded-xl text-base font-extrabold transition-all bg-tabActive text-white shadow-sm">
+    <button onclick="switchTab('rice')" id="tab-rice" class="tab-btn flex-1 py-3 rounded-xl text-lg font-extrabold transition-all bg-tabActive text-white shadow-sm">
       밥
     </button>
-    <button onclick="switchTab('bread')" id="tab-bread" class="tab-btn flex-1 py-3 rounded-xl text-base font-extrabold text-slate-400 hover:text-slate-700 transition-all">
+    <button onclick="switchTab('bread')" id="tab-bread" class="tab-btn flex-1 py-3 rounded-xl text-lg font-extrabold text-slate-400 hover:text-slate-700 transition-all">
       빵
     </button>
   </nav>
@@ -114,7 +115,7 @@
         { name: "출결관리", url: "https://stringweek-cyber.github.io/student/", bg: "bg-[#9EE0E8]", hover: "hover:bg-[#86D7E0]", text: "text-[#124855]" },
         { name: "담임전달사항", url: "https://stringweek-cyber.github.io/message", bg: "bg-[#B5E2FA]", hover: "hover:bg-[#9ED4F7]", text: "text-[#1A4B6E]" },
         { name: "진도표", url: "https://stringweek-cyber.github.io/lesson/", bg: "bg-[#A8E6CF]", hover: "hover:bg-[#91DFC2]", text: "text-[#134E3A]" },
-        { name: "덧셈만 하는 계산기", url: "https://stringweek-cyber.github.io/plus", bg: "bg-[#C3CEF7]", hover: "hover:bg-[#B0C0F3]", text: "text-[#213263]" }
+        { name: "덧셈계산기", url: "https://stringweek-cyber.github.io/plus", bg: "bg-[#C3CEF7]", hover: "hover:bg-[#B0C0F3]", text: "text-[#213263]" }
       ],
       bread: [
         { name: "결정적소비", url: "https://stringweek-cyber.github.io/budget", bg: "bg-[#FFC0CB]", hover: "hover:bg-[#FFB2C0]", text: "text-[#6E1A24]" },
@@ -143,7 +144,7 @@
         
         container.innerHTML = APP_DATA[cat].map(item => `
           <a href="${item.url}" target="_blank" 
-             class="${item.bg} ${item.hover} ${item.text} font-bold text-sm sm:text-base min-h-[58px] py-3.5 px-3 rounded-2xl flex items-center justify-center text-center transition-all active:scale-95 shadow-sm leading-snug break-keep">
+             class="${item.bg} ${item.hover} ${item.text} font-bold text-base sm:text-lg min-h-[58px] py-3.5 px-3 rounded-2xl flex items-center justify-center text-center transition-all active:scale-95 shadow-sm leading-snug break-keep">
             ${item.name}
           </a>
         `).join('');
@@ -159,10 +160,10 @@
         const sec = document.getElementById(`sec-${tab}`);
 
         if (tab === selectedTab) {
-          btn.className = "tab-btn flex-1 py-2.5 rounded-xl text-base font-extrabold transition-all bg-tabActive text-white shadow-sm";
+          btn.className = "tab-btn flex-1 py-3 rounded-xl text-lg font-extrabold transition-all bg-tabActive text-white shadow-sm";
           sec.classList.remove('hidden');
         } else {
-          btn.className = "tab-btn flex-1 py-2.5 rounded-xl text-base font-extrabold text-slate-400 hover:text-slate-700 transition-all";
+          btn.className = "tab-btn flex-1 py-3 rounded-xl text-lg font-extrabold text-slate-400 hover:text-slate-700 transition-all";
           sec.classList.add('hidden');
         }
       });
