@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>500원 모아 건물주</title>
+  <title>500원 모아 건물주 프로젝트</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -55,7 +55,7 @@
     <div class="flex items-center gap-2.5">
       <span class="w-2.5 h-6 bg-blue-600 rounded-full inline-block shrink-0"></span>
       <h1 class="text-xl sm:text-2xl font-black text-[#1A3A5C] tracking-tight">
-        500원 모아 건물주
+        500원 모아 건물주 프로젝트
       </h1>
     </div>
 
@@ -142,6 +142,9 @@
 
     const TARGET_DOOR_URL = "https://stringweek-cyber.github.io/door/";
 
+    // 현재 선택된 탭 상태 추적
+    let currentTab = 'rice';
+
     function renderAppButtons() {
       const catConfig = {
         rice: { container: 'grid-rice' },
@@ -181,6 +184,7 @@
     }
 
     function switchTab(selectedTab) {
+      currentTab = selectedTab;
       const tabs = ['rice', 'bread'];
       
       tabs.forEach(tab => {
@@ -196,6 +200,34 @@
         }
       });
     }
+
+    // 화면 좌/우 터치 스와이프 제스처 감지
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
+
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      // 상하 스크롤이 아닌 좌우 스와이프일 때만 작동 (50px 이상 이동 시)
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX < 0 && currentTab === 'rice') {
+          // 왼쪽으로 쓸어넘기면 '빵' 탭으로 이동
+          switchTab('bread');
+        } else if (deltaX > 0 && currentTab === 'bread') {
+          // 오른쪽으로 쓸어넘기면 '밥' 탭으로 이동
+          switchTab('rice');
+        }
+      }
+    }, { passive: true });
 
     let qrInstance = null;
     function openQrModal(url = TARGET_DOOR_URL, title = '페이지') {
