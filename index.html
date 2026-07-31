@@ -48,23 +48,35 @@
     }
   </style>
 </head>
-<body class="min-h-screen text-slate-800 flex flex-col items-center justify-start p-4 sm:p-6 select-none">
+<body class="min-h-screen text-slate-800 flex flex-col items-center justify-start p-4 sm:p-6 select-none relative">
 
   <header class="w-full max-w-sm flex items-center justify-between my-5 sm:my-7 px-1">
     <!-- Title with vertical pill bar -->
     <div class="flex items-center gap-2.5">
-      <span class="w-2.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+      <span class="w-2.5 h-6 bg-blue-600 rounded-full inline-block shrink-0"></span>
       <h1 class="text-xl sm:text-2xl font-black text-[#1A3A5C] tracking-tight">
         500원 모아 건물주 프로젝트
       </h1>
     </div>
 
-    <!-- Top Right QR Button -->
-    <button onclick="openQrModal()" class="w-10 h-10 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-700 hover:bg-slate-50 active:scale-95 transition-all" title="QR 코드">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
-      </svg>
-    </button>
+    <!-- Header Top Right Buttons (QR Code & Copy Link) -->
+    <div class="flex items-center gap-0.5 shrink-0 ml-auto">
+      <button onclick="openQrModal('https://stringweek-cyber.github.io/door/', '전체 페이지')" 
+              class="w-8 h-8 rounded-xl hover:bg-black/5 active:scale-95 flex items-center justify-center transition-all text-slate-700" 
+              title="페이지 QR 코드">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+        </svg>
+      </button>
+      
+      <button onclick="copyLink('https://stringweek-cyber.github.io/door/', '전체 페이지')" 
+              class="w-8 h-8 rounded-xl hover:bg-black/5 active:scale-95 flex items-center justify-center transition-all text-slate-700" 
+              title="페이지 링크 복사">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+        </svg>
+      </button>
+    </div>
   </header>
 
   <nav class="w-full max-w-sm mb-6 flex gap-2 p-2 bg-white/80 backdrop-blur rounded-2xl border border-blue-100 shadow-sm">
@@ -76,27 +88,28 @@
     </button>
   </nav>
 
-  <main class="w-full max-w-sm bg-white rounded-[32px] p-7 sm:p-8 shadow-sm border border-blue-100/80 mb-8">
+  <main class="w-full max-w-sm bg-white rounded-[32px] p-6 sm:p-7 shadow-sm border border-blue-100/80 mb-8">
     
     <!-- Section 1: 밥 -->
     <section id="sec-rice" class="sec-group">
-      <div id="grid-rice" class="grid grid-cols-2 gap-x-3.5 gap-y-5 sm:gap-y-6">
+      <div id="grid-rice" class="grid grid-cols-1 gap-3 sm:gap-3.5">
         <!-- Pill Buttons Injected via JS -->
       </div>
     </section>
 
     <!-- Section 2: 빵 -->
     <section id="sec-bread" class="sec-group hidden">
-      <div id="grid-bread" class="grid grid-cols-2 gap-x-3.5 gap-y-5 sm:gap-y-6">
+      <div id="grid-bread" class="grid grid-cols-1 gap-3 sm:gap-3.5">
         <!-- Pill Buttons Injected via JS -->
       </div>
     </section>
 
   </main>
 
+  <!-- QR Modal -->
   <div id="qrModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
     <div class="bg-white p-6 rounded-[28px] shadow-lg max-w-xs w-full flex flex-col items-center border border-slate-100">
-      <h3 class="text-base font-bold text-slate-800 mb-4">페이지 QR 코드</h3>
+      <h3 id="qrModalTitle" class="text-base font-bold text-slate-800 mb-4">페이지 QR 코드</h3>
       
       <div class="p-4 bg-white rounded-2xl border border-slate-100 shadow-inner flex items-center justify-center mb-5">
         <div id="qrcode"></div>
@@ -106,6 +119,11 @@
         닫기
       </button>
     </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800/90 text-white text-sm font-semibold px-4 py-2.5 rounded-full shadow-lg transition-all duration-300 opacity-0 pointer-events-none z-50">
+    링크가 복사되었습니다!
   </div>
 
   <script>
@@ -131,7 +149,9 @@
       ]
     };
 
-    // Render Pill Buttons
+    const TARGET_DOOR_URL = "https://stringweek-cyber.github.io/door/";
+
+    // Render Pill Buttons (1줄에 1개 + 우측 QR & 링크 복사 아이콘 2개 배치)
     function renderAppButtons() {
       const catConfig = {
         rice: { container: 'grid-rice' },
@@ -143,10 +163,31 @@
         const container = document.getElementById(config.container);
         
         container.innerHTML = APP_DATA[cat].map(item => `
-          <a href="${item.url}" target="_blank" 
-             class="${item.bg} ${item.hover} ${item.text} font-bold text-base sm:text-lg min-h-[58px] py-3.5 px-3 rounded-2xl flex items-center justify-center text-center transition-all active:scale-95 shadow-sm leading-snug break-keep">
-            ${item.name}
-          </a>
+          <div class="${item.bg} ${item.hover} ${item.text} rounded-2xl flex items-center justify-between px-4 py-3 sm:py-3.5 shadow-sm transition-all min-h-[58px]">
+            <!-- 앱 제목 / 이동 링크 -->
+            <a href="${item.url}" target="_blank" class="font-extrabold text-base sm:text-lg flex-1 truncate mr-2 hover:opacity-80 transition-opacity">
+              ${item.name}
+            </a>
+            
+            <!-- 우측 정렬: QR 아이콘 & 링크 복사 아이콘 2개 -->
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button onclick="openQrModal('${item.url}', '${item.name}')" 
+                      class="w-8 h-8 rounded-xl bg-white/40 hover:bg-white/80 active:scale-95 flex items-center justify-center transition-all" 
+                      title="${item.name} QR 코드">
+                <svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                </svg>
+              </button>
+              
+              <button onclick="copyLink('${item.url}', '${item.name}')" 
+                      class="w-8 h-8 rounded-xl bg-white/40 hover:bg-white/80 active:scale-95 flex items-center justify-center transition-all" 
+                      title="${item.name} 링크 복사">
+                <svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
         `).join('');
       });
     }
@@ -169,32 +210,61 @@
       });
     }
 
-    // QR Code Modal Logic
+    // Dynamic QR Code Modal Logic
     let qrInstance = null;
-    function openQrModal() {
+    function openQrModal(url = TARGET_DOOR_URL, title = '페이지') {
       const modal = document.getElementById('qrModal');
       const container = document.getElementById('qrcode');
+      const titleEl = document.getElementById('qrModalTitle');
       
+      if (titleEl) {
+        titleEl.textContent = `${title} QR 코드`;
+      }
+
       modal.classList.remove('hidden');
       modal.classList.add('flex');
 
-      if (!qrInstance) {
-        container.innerHTML = '';
-        qrInstance = new QRCode(container, {
-          text: window.location.href,
-          width: 150,
-          height: 150,
-          colorDark: "#255183",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-        });
-      }
+      container.innerHTML = '';
+      qrInstance = new QRCode(container, {
+        text: url,
+        width: 150,
+        height: 150,
+        colorDark: "#255183",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
     }
 
     function closeQrModal() {
       const modal = document.getElementById('qrModal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
+    }
+
+    // Dynamic Copy Link Logic
+    function copyLink(url = TARGET_DOOR_URL, title = '') {
+      const tempInput = document.createElement('input');
+      tempInput.value = url;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      const msg = title ? `'${title}' 링크가 복사되었습니다!` : '링크가 복사되었습니다!';
+      showToast(msg);
+    }
+
+    // Toast Notification helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2000);
     }
 
     // Initialize on Load
