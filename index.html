@@ -226,7 +226,7 @@
       }
     }, { passive: true });
 
-    // 고정 QR 이미지 생성 로직 (외부 JS 동적 스크립트 실행 불가 앱 대응)
+    // QRCode.js를 사용해 브라우저 내에서 즉시 QR 코드 생성 (네트워크 요청 없음)
     function openQrModal(url = TARGET_DOOR_URL, title = '페이지') {
       const modal = document.getElementById('qrModal');
       const container = document.getElementById('qrcode');
@@ -239,8 +239,12 @@
       modal.classList.remove('hidden');
       modal.classList.add('flex');
 
-      const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`;
-      container.innerHTML = `<img src="${qrImageUrl}" alt="${title} QR 코드" class="w-[150px] h-[150px] block rounded-lg" />`;
+      container.innerHTML = '';
+      new QRCode(container, {
+        text: url,
+        width: 150,
+        height: 150
+      });
     }
 
     function closeQrModal() {
